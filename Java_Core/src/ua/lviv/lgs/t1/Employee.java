@@ -1,9 +1,12 @@
 package ua.lviv.lgs.t1;
 
-public class Employee {
+import java.io.Serializable;
+
+public class Employee implements Serializable{
+	
 	private int id;
 	private String name;
-	private double salary;
+	private transient double salary;
 	
 	public Employee(int id, String name, double salary) {
 		super();
@@ -36,8 +39,10 @@ public class Employee {
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", name=" + name + ", salary=" + salary + "]";
+	}
+		
 }
