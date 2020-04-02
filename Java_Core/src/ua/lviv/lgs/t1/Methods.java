@@ -29,6 +29,6 @@ public class Methods {
 		ois.close();
 		is.close();
 		return object;
-	}	
+	}
 
 }
