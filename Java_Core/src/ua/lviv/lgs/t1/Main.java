@@ -17,10 +17,8 @@ public class Main {
 		Employee employee = new Employee(0, "Petro Petrov", 15365.28);
 		
 		System.out.println(employee);
-		Methods.serialize(file, employee);
-			//Methods.serialize(file, employee, true);
-		System.out.println(Methods.deserealize(file));
-		
+		Methods.serialize(file, employee);			
+		System.out.println(Methods.deserealize(file));		
 		
 		List<Employee> employeeAll = new ArrayList<>();
 			employeeAll.add(employee);
