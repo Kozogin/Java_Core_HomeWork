@@ -43,6 +43,7 @@ public class Main {
 			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file)))
 	        {
 	            oos.writeObject(employeeAll);
+	            oos.close();
 	            System.out.println("File has been written");
 	        }
 	        catch(Exception ex){	              
@@ -54,6 +55,7 @@ public class Main {
 	        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file)))
 	        {	             
 	        newEmployee=((ArrayList<Employee>)ois.readObject());
+	        ois.close();
 	        }
 	        catch(Exception ex){	              
 	            System.out.println(ex.getMessage());
