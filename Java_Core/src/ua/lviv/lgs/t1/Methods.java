@@ -28,7 +28,7 @@ public class Methods {
 		Serializable object = (Serializable) ois.readObject();
 		ois.close();
 		is.close();
-		return object.toString();
+		return object;
 	}	
 
 }

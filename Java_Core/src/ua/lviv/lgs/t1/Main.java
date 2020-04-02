@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,29 +40,15 @@ public class Main {
 				System.out.println(next);				
 			}
 			
-			//serialize
-			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file)))
-	        {
-	            oos.writeObject(employeeAll);
-	            oos.close();
-	            System.out.println("File has been written");
-	        }
-	        catch(Exception ex){	              
-	            System.out.println(ex.getMessage());
-	        } 
-	          
-	        // deserealize in  new list
-	        List<Employee> newEmployee= new ArrayList<>();
-	        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file)))
-	        {	             
-	        newEmployee=((ArrayList<Employee>)ois.readObject());
-	        ois.close();
-	        }
-	        catch(Exception ex){	              
-	            System.out.println(ex.getMessage());
-	        }	          
-	        for(Employee p : newEmployee)
-	            System.out.println(p);	     
+			Methods.serialize(file, (Serializable)employeeAll);
+			//Methods.serialize(file, employee, true);
+		 System.out.println(Methods.deserealize(file));
+		 System.out.println();
+		 List<Employee> newEmployee = new ArrayList<Employee>();
+		 newEmployee = (List<Employee>) Methods.deserealize(file); 
+		 for(Employee p : newEmployee)
+	            System.out.println(p);	 
+     
 	}
 
 }
