@@ -39,7 +39,7 @@ public class Main {
 				System.out.println(next);				
 			}
 			
-			//сериализація
+			//serialize
 			try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file)))
 	        {
 	            oos.writeObject(employeeAll);
@@ -49,7 +49,7 @@ public class Main {
 	            System.out.println(ex.getMessage());
 	        } 
 	          
-	        // десериализація в новий список
+	        // deserealize in  new list
 	        List<Employee> newEmployee= new ArrayList<>();
 	        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file)))
 	        {	             
