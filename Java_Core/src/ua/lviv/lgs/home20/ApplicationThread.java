@@ -10,7 +10,7 @@ public class ApplicationThread {
 		return number;		
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		
 		
 		System.out.println("Enter number members Fibonacci");
@@ -19,6 +19,7 @@ public class ApplicationThread {
 		
 		MyThread thread1 = new MyThread();
 		thread1.start();
+		thread1.join();
 		
 		RunnableThread thread2 = new RunnableThread();
 
@@ -40,13 +41,14 @@ class MyThread extends Thread{
 				array[i] = array[i-2] + array[i-1];
 			}
 		}		
-		try {
+		
+		for (int i : array) {
+			System.out.print(i + ", ");
+			try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		for (int i : array) {
-			System.out.print(i + ", ");
 		}
 		System.out.println();		
 	}
@@ -75,16 +77,16 @@ class RunnableThread implements Runnable{
 				array[i] = array[i-2] + array[i-1];
 			}
 		}		
-		try {
+		
+		for (int j = array.length - 1; j > -1; j--) {
+			System.out.print(array[j] + ", ");
+			try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		for (int j = array.length - 1; j > -1; j--) {
-			System.out.print(array[j] + ", ");
 		}
 		System.out.println();		
-	}
-	
+	}	
 	
 }
