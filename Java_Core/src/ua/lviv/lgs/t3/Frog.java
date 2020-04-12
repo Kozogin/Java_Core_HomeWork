@@ -2,10 +2,10 @@ package ua.lviv.lgs.t3;
 
 public class Frog{
 	
-	Amphibia eat = () -> System.out.println("ам-ам");
-	Amphibia sleep = () -> System.out.println("хрр-хрр");
-	Amphibia swim = () -> System.out.println("плюх-плюх");
-	Amphibia walk = () -> System.out.println("раз-два");
+	Amphibia eat = () -> System.out.println("nam-nam");
+	Amphibia sleep = () -> System.out.println("hrr-hrr");
+	Amphibia swim = () -> System.out.println("plyh-plyh");
+	Amphibia walk = () -> System.out.println("one-two");
 
 }
 
