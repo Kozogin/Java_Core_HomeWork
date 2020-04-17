@@ -1,4 +1,4 @@
-package ua.lviv.lgs;
+package ua.lviv.lgs.t0;
 
 public class Person {
 	protected int weight;

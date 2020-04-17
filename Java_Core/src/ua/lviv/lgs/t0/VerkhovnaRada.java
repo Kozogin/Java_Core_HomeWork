@@ -1,4 +1,4 @@
-package ua.lviv.lgs;
+package ua.lviv.lgs.t0;
 
 import java.util.ArrayList;
 import java.util.Iterator;
