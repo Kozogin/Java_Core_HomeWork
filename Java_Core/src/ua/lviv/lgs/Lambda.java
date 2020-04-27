@@ -22,6 +22,13 @@ public class Lambda {
 								next.getMovie().getDuration(), -1));
 		return next.getStartTime();
 	};
+	
+	
+	static Optimizate breakOptimizate = (previous, next, breakTime) -> {
+		next = new Seance(next.getMovie(), calcOperationTime(previous.getEndTime(), breakTime, 1));
+		return next.getStartTime();
+	};
+	
 
 	static FirstSeance simplyOne = (next, open) -> {
 		if (next.getStartTime().compareTo(calcOperationTime(open.getOpen(), new Time(0, 0), 1)) == -1) {

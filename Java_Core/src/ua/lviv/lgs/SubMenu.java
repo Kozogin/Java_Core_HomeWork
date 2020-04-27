@@ -58,7 +58,7 @@ public class SubMenu {
 					schedule.overlayOptizate(cinema, movie, seance, Lambda.finish);
 					break;
 				case 4:
-					schedule.breaksOptizate(cinema, movie, seance);
+					schedule.overlayOptizate(cinema, movie, seance, Lambda.breakOptimizate);
 					break;
 				default:
 					break;

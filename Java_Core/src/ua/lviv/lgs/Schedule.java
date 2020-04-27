@@ -1,6 +1,5 @@
 package ua.lviv.lgs;
 
-import static java.util.stream.Collectors.toCollection;
 //import static java.util.stream.Collectors.toCollection;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -116,8 +115,12 @@ public class Schedule implements Serializable{
 			replace.remove(0);
 			replace.add(0, last);
 			
-			replace.forEach(System.out :: println);
-			
+			//replace.forEach(System.out :: println);			
+		}
+		
+		if(typeOptimizate.equals(Lambda.breakOptimizate)) {
+			breakTime = calcBreakTimeOptimizete(cinema, movie, seance);
+			//breakTime = new Time(0, 20);///////////////////////////
 		}
 		
 		ListIterator<Seance> iterator = replace.listIterator();
@@ -148,8 +151,27 @@ public class Schedule implements Serializable{
 		seanses.addAll(replace);
 	}	
 	
-	void breaksOptizate(Cinema cinema, Movie movie, Seance seance) {
-	
+	Time calcBreakTimeOptimizete(Cinema cinema, Movie movie, Seance seance) {
+		
+		Time allDuration = new Time(0, 0);		
+		List<Time> duration = seanses.stream().map(o -> o.getMovie().getDuration()).collect(Collectors.toList());
+		allDuration = duration.stream().reduce((s1, s2) -> Lambda.calcOperationTime(s1, s2, 1)).get();
+		
+		Time allOpenOp = new Time(0, 0);
+		Time allOpenCl = new Time(0, 0);
+		allOpenOp = Lambda.calcOperationTime(new Time(23, 59), cinema.getOpen(), -1);		
+		allOpenCl = Lambda.calcOperationTime(new Time(0, 1), cinema.getClose(), 1);
+		allOpenOp = Lambda.calcOperationTime(allOpenOp, allOpenCl, 1);
+		
+		Time allBreaks = Lambda.calcOperationTime(allOpenOp, allDuration, -1);
+		System.out.println(allBreaks);
+		long countSeance = seanses.stream().count();
+		
+		int minBreakTime = (int) ((60 * allBreaks.getHour() + allBreaks.getMin())/(countSeance - 1));
+		int HourBreakTime = minBreakTime/60;
+		minBreakTime -= 60 * HourBreakTime;		
+		
+		return new Time(HourBreakTime, minBreakTime);
 	}	
 
 	public void setSeanses(Set<Seance> seanses) {
