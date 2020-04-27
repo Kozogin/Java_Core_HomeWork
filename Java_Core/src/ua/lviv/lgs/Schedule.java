@@ -1,15 +1,24 @@
 package ua.lviv.lgs;
 
+import static java.util.stream.Collectors.toCollection;
+//import static java.util.stream.Collectors.toCollection;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-public class Schedule implements Serializable {
-
+public class Schedule implements Serializable{
+		
 	private static final long serialVersionUID = 4L;
 	Set<Seance> seanses = new TreeSet<>();
-
+	Time timeSchedule;
+	
+	
 	public Schedule() {
 	}
 
@@ -29,9 +38,10 @@ public class Schedule implements Serializable {
 					int hour = cinema.scanInt.get();
 					System.out.println("Enter start seance min: ");
 					int min = cinema.scanInt.get();
-					Movie movieSelect = cinema.moviesLibrary.get(idMovie - 1);
+					Movie movieSelect = cinema.moviesLibrary.get(idMovie - 1);					
 					seance = new Seance(movieSelect, new Time(hour, min));
-					seanses.add(seance);
+					seanses.add(seance);					
+										
 				} else {
 					System.out.println("Here is no movie with this number ");
 				}
@@ -72,9 +82,75 @@ public class Schedule implements Serializable {
 		}
 	}
 	
-	public void copySeance() {
-		//////
+	public void copySeance(Cinema cinema, String dayOfWeek) {
+		Days[] arrDays = Days.values();		
+		boolean flag = cinema.isMonthPresent(arrDays, dayOfWeek);
+		if (flag) {
+			Days day = Days.valueOf(dayOfWeek.toUpperCase());
+		seanses = cinema.schedules.get(day).getSeances();
+		}		
 	}
+	
+	void overlayOptizate(Cinema cinema, Movie movie, Seance seance, Optimizate typeOptimizate) {
+		
+		Time breakTime = cinema.getBreakTime();
+		List<Seance> replace = new ArrayList<>();
+		Seance previous = new Seance();
+		replace.addAll(seanses);
+		
+		Seance first = replace.stream().findFirst().orElse(previous);
+		if(typeOptimizate.equals(Lambda.simply)) {
+			first = Lambda.simplyOne.getFirst(first, cinema);
+		} else {
+			first = Lambda.levelingFirst.getFirst(first, cinema);
+		}
+			
+		replace.remove(0);
+		replace.add(0, first);			
+		
+		if(typeOptimizate.equals(Lambda.finish)) {
+			Collections.reverse(replace);			
+			Seance last = replace.stream().findFirst().orElse(previous);
+			last = Lambda.levelingLast.getFirst(last, cinema);
+			
+			replace.remove(0);
+			replace.add(0, last);
+			
+			replace.forEach(System.out :: println);
+			
+		}
+		
+		ListIterator<Seance> iterator = replace.listIterator();
+		int id = 0;
+		while(iterator.hasNext()) {			
+			Seance next = iterator.next();
+			
+			if(id != 0) {
+				Time NextStart = typeOptimizate.landslide(previous, next,  breakTime);				
+				next = new Seance(next.getMovie(), NextStart);				
+				iterator.set(next);
+			} else {
+				if(next.getStartTime().compareTo(cinema.getOpen()) != 1) {
+					 next = new Seance(next.getMovie(),cinema.getOpen());										
+					iterator.set(next);
+				}
+			}
+			
+			previous = new Seance(next.getMovie(),next.getStartTime());			
+			id++;
+		}
+		
+		replace = replace.stream()				
+				.filter(o -> (compareOverlay( o.getEndTime(), cinema.getClose()) ))
+				.collect(Collectors.toList());		
+		
+		seanses.clear();
+		seanses.addAll(replace);
+	}	
+	
+	void breaksOptizate(Cinema cinema, Movie movie, Seance seance) {
+	
+	}	
 
 	public void setSeanses(Set<Seance> seanses) {
 		this.seanses = seanses;
@@ -83,10 +159,50 @@ public class Schedule implements Serializable {
 	public Set<Seance> getSeances() {
 		return seanses;
 	}
+	
+	public Time getTime() {
+		return timeSchedule;		
+	}
 
 	@Override
 	public String toString() {
 		return "seanses: " + seanses;
 	}
+
+	public boolean compareOverlay(Time o1, Time o2) {
+
+		int o1EndHour;
+		int o1EndMin;
+		int o2CloseHour;
+		int o2CloseMin;
+
+		o1EndMin = o1.getMin();
+		if (o1.getHour() < 7) {
+			o1EndHour = o1.getHour() + 24;
+		} else {
+			o1EndHour = o1.getHour();
+		}
+
+		o2CloseMin = o2.getMin();
+		if (o2.getHour() < 7) {
+			o2CloseHour = o2.getHour() + 24;
+		} else {
+			o2CloseHour = o2.getHour();
+		}
+
+		if (o1EndHour < o2CloseHour) {
+			return true;
+		} else if (o1EndHour > o2CloseHour) {
+			return false;
+		} else {
+			if (o1EndMin < o2CloseMin) {
+				return true;
+			} else if (o1EndMin > o2CloseMin) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}	
 
 }

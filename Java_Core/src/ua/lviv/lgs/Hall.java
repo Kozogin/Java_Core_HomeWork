@@ -10,6 +10,8 @@ public class Hall implements Serializable{
 			
 	private Time openHall ;
 	private Time closeHall;
+	private Time breakTime;
+	
 	TreeMap<Days, Schedule> schedulesHall;
 	List<Movie> moviesLibraryHall; 
 	
@@ -22,6 +24,7 @@ public class Hall implements Serializable{
 		closeHall = cinema.getClose() ;
 		schedulesHall = cinema.getSchedules();
 		moviesLibraryHall = cinema.getMoviesLibrary();
+		//breakTime = 
 	}
 
 	public Time getOpenHall() {
@@ -39,6 +42,10 @@ public class Hall implements Serializable{
 	public List<Movie> getMoviesLibraryHall() {
 		return moviesLibraryHall;
 	}
+	
+	public Time getBreakTime() {
+		return breakTime;
+	}	
 
 	@Override
 	public String toString() {

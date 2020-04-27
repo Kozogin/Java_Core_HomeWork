@@ -1,8 +1,9 @@
 package ua.lviv.lgs;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
-public class Time implements Serializable{
+public class Time implements Comparable<Time>, Comparator<Time>, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private int hour;
@@ -52,6 +53,118 @@ public class Time implements Serializable{
 		}
 		return " " + hour + ":" + min + " ";
 	}
+
+	@Override
+	public int compareTo(Time o) {
+		if (this.getHour() < 5 && o.getHour() > 4) {
+			return 1;
+
+		} else if (this.getHour() < 5 && o.getHour() < 5) {
+			if (this.getHour() > o.getHour()) {
+				return 1;
+			} else if (this.getHour() < o.getHour()) {
+				return -1;
+			} else {
+				if (this.getMin() > o.getMin()) {
+					return 1;
+				} else if (this.getMin() < o.getMin()) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		}
+		
+		if(this.getHour() > 4 && o.getHour() < 5) {
+			return -1;
+		}
+		
+		if(this.getHour() > o.getHour()) {
+			return 1;
+		} else if(this.getHour() < o.getHour()){
+			return -1;
+		} else {
+			if(this.getMin() > o.getMin()) {
+				return 1;
+			} else if(this.getMin() < o.getMin()) {
+				return -1;
+			}
+		}
+//		if(o.getHour() < 7) {
+//			if(this.getHour() < o.getHour()) {
+//				return 1;
+//			} else if (this.getHour() > o.getHour()) {
+//				return -1;
+//			} else {
+//				if(this.getMin() < o.getMin()) {
+//					return 1;
+//				} else if (this.getMin() > o.getMin()) {
+//					return -1;
+//				} else {
+//					return 0;
+//				}
+//			}			
+//		}
+//		
+//		if(o.getHour() > 5 && o.getHour() < 24) {
+//			if(this.getHour() < o.getHour()) {
+//				return 1;
+//			} else if (this.getHour() > o.getHour()) {
+//				return -1;
+//			} else {
+//				if(this.getMin() < o.getMin()) {
+//					return 1;
+//				} else if (this.getMin() > o.getMin()) {
+//					return -1;
+//				} else {
+//					return 0;
+//				}
+//			}	
+//		}
+
+		return 0;
+	}
+
+	@Override
+	public int compare(Time o1, Time o2) {
+		
+		if (o1.getHour() < 5 && o2.getHour() > 4) {
+			return 1;
+
+		} else if (o1.getHour() < 5 && o2.getHour() < 5) {
+			if (o1.getHour() > o2.getHour()) {
+				return 1;
+			} else if (o1.getHour() < o2.getHour()) {
+				return -1;
+			} else {
+				if (o1.getMin() > o2.getMin()) {
+					return 1;
+				} else if (o1.getMin() < o2.getMin()) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		}
+		
+		if(o1.getHour() > 4 && o2.getHour() < 5) {
+			return -1;
+		}
+		
+		if(o1.getHour() > o2.getHour()) {
+			return 1;
+		} else if(o1.getHour() < o2.getHour()){
+			return -1;
+		} else {
+			if(o1.getMin() > o2.getMin()) {
+				return 1;
+			} else if(o1.getMin() < o2.getMin()) {
+				return -1;
+			}
+		}
+		return 0;
+	}	
+
 
 }
 

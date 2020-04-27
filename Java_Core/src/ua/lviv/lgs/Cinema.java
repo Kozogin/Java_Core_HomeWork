@@ -14,13 +14,18 @@ import java.util.function.Supplier;
 public class Cinema implements Serializable {
 
 	private static final long serialVersionUID = 5L;
-	private Time open = new Time(10, 0);
-	private Time close = new Time(23, 50);
+	private Time open;
+	private Time close;
+	private Time breakTime;
 
 	TreeMap<Days, Schedule> schedules = new TreeMap<>();
 	List<Movie> moviesLibrary = new ArrayList<>();
 
-	public Cinema() {}
+	public Cinema() {
+		open = new Time(10, 0);
+		close = new Time(2, 20);
+		breakTime = new Time(0, 15);
+	}
 
 	public Cinema(Time open, Time close) {
 		super();
@@ -44,6 +49,11 @@ public class Cinema implements Serializable {
 		Scanner sc = new Scanner(System.in);
 		return sc.next();
 	};
+	
+	Supplier<String> scanLine = () -> {
+		Scanner sc = new Scanner(System.in);
+		return sc.nextLine();
+	};
 
 	Supplier<Integer> scanInt = () -> {
 		Scanner sc = new Scanner(System.in);
@@ -64,7 +74,7 @@ public class Cinema implements Serializable {
 	public void addMovie() {
 		// moviesLibrary.forEach(System.out :: println);
 		System.out.println("Enter the name of the movie: ");
-		String titleMovie = scanString.get();
+		String titleMovie = scanLine.get();
 		System.out.println("Enter duration of movie, hour: ");
 		int hour = scanInt.get();
 		System.out.println("Enter duration of movie, min: ");
@@ -101,12 +111,13 @@ public class Cinema implements Serializable {
 		}
 	}
 
-	private boolean isMonthPresent(Days[] arrDays, String dayOfWeek) {
+	public boolean isMonthPresent(Days[] arrDays, String dayOfWeek) {
 		for (Days days : arrDays) {
 			if (days.name().equalsIgnoreCase(dayOfWeek)) {
 				return true;
 			}
 		}
+		System.out.println("Wrong input the day of week");
 		return false;
 	}
 
@@ -272,6 +283,14 @@ public class Cinema implements Serializable {
 
 	public List<Movie> getMoviesLibrary() {
 		return moviesLibrary;
+	}
+	
+	public Time getBreakTime() {
+		return breakTime;
+	}
+
+	public void setBreakTime(Time breakTime) {
+		this.breakTime = breakTime;
 	}
 
 	@Override

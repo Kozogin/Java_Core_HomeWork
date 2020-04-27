@@ -48,8 +48,7 @@ public class App {
 				SubMenu.movieMenuMethod(cinema, schedule);
 				break;
 			case 3:					
-				hall.objcCreate(cinema);
-				System.out.println(hall);
+				hall.objcCreate(cinema);				
 				FileWriteRead.writeObject(file,(Serializable) schedule);
 				FileWriteRead.writeObject(file2,(Serializable) hall);
 				System.out.println("all information saved");

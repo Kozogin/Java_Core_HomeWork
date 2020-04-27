@@ -23,7 +23,9 @@ public class SubMenu {
 				schedule.remoteSeance(cinema);
 				break;
 			case 4:
-				//schedule.copySeanse(cinema);
+				System.out.println("Add Seance. Enter the day of week");
+				String dayOfWeekCopy = cinema.scanString.get();
+				schedule.copySeance(cinema, dayOfWeekCopy);
 				break;
 			case 5:
 				cinema.showSeance();
@@ -39,7 +41,29 @@ public class SubMenu {
 				cinema.removeSeance(schedule, dayOfWeekRemove);
 				break;
 			case 8:
-				//optimize
+				System.out.println("        Enter principle of optimization \n"				
+						+ "  Enter 1, to checking seances overlay \n"
+						+ "  Enter 2, offset to sessions start \n"
+						+ "  Enter 3, offset to sessions finish \n"
+						+ "  Enter 4, breaks are equal");	
+				
+				switch (cinema.scanInt.get()) {
+				case 1:
+					schedule.overlayOptizate(cinema, movie, seance, Lambda.simply);					
+					break;
+				case 2:
+					schedule.overlayOptizate(cinema, movie, seance, Lambda.begin);
+					break;
+				case 3:
+					schedule.overlayOptizate(cinema, movie, seance, Lambda.finish);
+					break;
+				case 4:
+					schedule.breaksOptizate(cinema, movie, seance);
+					break;
+				default:
+					break;
+				}
+				
 				break;
 			default:
 				break;

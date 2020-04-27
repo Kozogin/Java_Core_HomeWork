@@ -7,7 +7,7 @@ public class Seance implements Comparable<Seance>, Serializable{
 	private static final long serialVersionUID = 5L;
 	private Movie movie;
 	private Time  startTime;
-	private Time  endTime;
+	private Time  endTime;	
 	
 	public Seance() {}
 	
@@ -15,7 +15,7 @@ public class Seance implements Comparable<Seance>, Serializable{
 		super();
 		this.movie = movie;
 		this.startTime = startTime;
-		this.endTime = movie.calcEndTime(startTime); 
+		this.endTime = movie.calcEndTime(startTime); 		
 	}
 
 	public Movie getMovie() {
@@ -40,7 +40,7 @@ public class Seance implements Comparable<Seance>, Serializable{
 
 	public void setEndTime() {
 		this.endTime = movie.calcEndTime(startTime);
-	}
+	}	
 
 	@Override
 	public String toString() {
@@ -86,6 +86,30 @@ public class Seance implements Comparable<Seance>, Serializable{
 
 	@Override
 	public int compareTo(Seance o) {
+		
+		if (this.getStartTime().getHour() < 5 && o.getStartTime().getHour() > 4) {
+			return 1;
+
+		} else if (this.getStartTime().getHour() < 5 && o.getStartTime().getHour() < 5) {
+			if (this.getStartTime().getHour() > o.getStartTime().getHour()) {
+				return 1;
+			} else if (this.getStartTime().getHour() < o.getStartTime().getHour()) {
+				return -1;
+			} else {
+				if (this.getStartTime().getMin() > o.getStartTime().getMin()) {
+					return 1;
+				} else if (this.getStartTime().getMin() < o.getStartTime().getMin()) {
+					return -1;
+				} else {
+					return 0;
+				}
+			}
+		}
+		
+		if(this.getStartTime().getHour() > 4 && o.getStartTime().getHour() < 5) {
+			return -1;
+		}
+		
 		if(this.getStartTime().getHour() > o.getStartTime().getHour()) {
 			return 1;
 		} else if(this.getStartTime().getHour() < o.getStartTime().getHour()){
@@ -96,9 +120,9 @@ public class Seance implements Comparable<Seance>, Serializable{
 			} else if(this.getStartTime().getMin() < o.getStartTime().getMin()) {
 				return -1;
 			}
-		}
+		}		
 		return 0;
-	}	
-
+	}
+	
 }
 

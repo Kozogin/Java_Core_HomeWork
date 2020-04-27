@@ -45,7 +45,7 @@ public class Movie implements Serializable{
 			hour -= 24;
 		}
 		return new Time(hour, min);
-	}
+	}	
 
 	public String getTitle() {
 		return title;
