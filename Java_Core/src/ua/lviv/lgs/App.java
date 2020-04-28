@@ -2,6 +2,13 @@ package ua.lviv.lgs;
 
 import java.io.File;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class App {
 	
@@ -39,7 +46,7 @@ public class App {
 			switch (cinema.scanInt.get()) {
 			case 0:
 				System.out.println("NOW");
-				
+				now(cinema, movie, seance, schedule);
 				break;
 			case 1:
 				SubMenu.seansesMenuMethod(cinema, movie, seance, schedule);
@@ -104,8 +111,27 @@ public class App {
 		System.out.println("                 OPTION ");
 		System.out.println("Main Menu:                              Enter 0 ");
 		System.out.println("Open and Close:                         Enter 1 ");
-		System.out.println("Enter guaranteed break between seanses: Enter 2 ");
-		System.out.println("Teknical break, Time:                   Enter 3 ");		
+		System.out.println("Enter time break between seanses:       Enter 2 ");			
+	}
+	
+	public static void now(Cinema cinema, Movie movie, Seance seance, Schedule schedule) {
+		LocalDate today = LocalDate.now();
+		LocalTime time = LocalTime.now();
+		int nowHour = time.getHour();
+		int nowMin = time.getMinute();
+		System.out.println(today + "  " + today.getDayOfWeek() + "  " + time.truncatedTo(ChronoUnit.MINUTES));
+			
+		Days day = Days.valueOf(today.getDayOfWeek().name());
+		Set<Seance> seances = cinema.schedules.get(day).getSeances();
+		//seances.forEach(System.out :: println);
+		
+	Seance nextSeance = seances.stream()
+			.filter(o -> schedule.compareOverlay(new Time (nowHour, nowMin), o.getStartTime() ))
+			.findFirst().get();
+	System.out.println("Next " + nextSeance);
+	System.out.println("After " + Lambda.calcOperationTime(nextSeance.getStartTime(), new Time (nowHour, nowMin),  -1));
+
+	System.out.println();
 	}
 
 }

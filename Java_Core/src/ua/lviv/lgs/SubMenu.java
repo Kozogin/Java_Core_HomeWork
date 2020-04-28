@@ -104,14 +104,28 @@ public class SubMenu {
 				again = false;
 				break;
 			case 1:
+				System.out.println("Opening time: " + cinema.getOpen());
+				System.out.println("Opening time, hour ");
+				int openTimeHour = cinema.scanInt.get();
+				System.out.println("Opening time, hour ");
+				int openTimeMin = cinema.scanInt.get();
 				
+				System.out.println("Closing  time: " + cinema.getClose());
+				System.out.println("Closing time, hour ");
+				int closeTimeHour = cinema.scanInt.get();
+				System.out.println("Closing time, hour ");
+				int closeTimeMin = cinema.scanInt.get();
+				cinema.setOpen(new Time(openTimeHour, openTimeMin));
+				cinema.setClose(new Time(closeTimeHour, closeTimeMin));
 				break;
 			case 2:
+				System.out.println("Break time: " + cinema.getBreakTime());
+				System.out.println("Break time, hour ");
+				int breakHour = cinema.scanInt.get();
+				int breakMin = cinema.scanInt.get();
+				cinema.setBreakTime(new Time(breakHour, breakMin));
 				
-				break;
-			case 3:
-				
-				break;
+				break;			
 			default:
 				break;
 			}

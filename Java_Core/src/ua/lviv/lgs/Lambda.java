@@ -41,6 +41,17 @@ public class Lambda {
 			next = new Seance(next.getMovie(), calcOperationTime(open.getOpen(), new Time(0, 0), 1));
 		return next;
 	};
+	
+	static FirstSeance levelingLastEquals = (previous, close) -> {
+		if (previous.getStartTime()
+				.compareTo(calcOperationTime(close.getClose(), 
+						previous.getMovie().getDuration(), -1)) == 1) {
+			
+			previous = new Seance(previous.getMovie(),
+					calcOperationTime(close.getClose(), previous.getMovie().getDuration(), -1));
+		}
+		return previous;
+	};
 
 	static FirstSeance levelingLast = (previous, close) -> {
 		previous = new Seance
@@ -78,10 +89,12 @@ public class Lambda {
 
 }
 
+@FunctionalInterface
 interface Optimizate {
 	public Time landslide(Seance Previous, Seance Next, Time breakTime);
 }
 
+@FunctionalInterface
 interface FirstSeance {
 	public Seance getFirst(Seance first, Cinema cinema);
 }

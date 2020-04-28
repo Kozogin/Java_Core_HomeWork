@@ -72,7 +72,7 @@ public class Cinema implements Serializable {
 	}
 
 	public void addMovie() {
-		// moviesLibrary.forEach(System.out :: println);
+		
 		System.out.println("Enter the name of the movie: ");
 		String titleMovie = scanLine.get();
 		System.out.println("Enter duration of movie, hour: ");
@@ -188,10 +188,10 @@ public class Cinema implements Serializable {
 		/* remove from List<Movie> moviesLibrary */
 		try {
 			System.out.println("Remove movie Enter number film to remove: ");
-			int idRemote = scanInt.get();
+			int idRemove = scanInt.get();
 
-			Movie deleteMovie = moviesLibrary.get(idRemote - 1);
-			moviesLibrary.remove(idRemote - 1);
+			Movie deleteMovie = moviesLibrary.get(idRemove - 1);
+			moviesLibrary.remove(idRemove - 1);
 			moviesLibrary.forEach(System.out::println);
 			return deleteMovie;
 		} catch (NullPointerException e) {

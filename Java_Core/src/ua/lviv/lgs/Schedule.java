@@ -32,12 +32,35 @@ public class Schedule implements Serializable{
 			cinema.showMovie();
 			System.out.println("Enter id movie for seance: ");
 			int idMovie = cinema.scanInt.get();
-				if(!(idMovie < 1 || idMovie > cinema.moviesLibrary.size())){
-					System.out.println("Enter start seance hour: ");
-					int hour = cinema.scanInt.get();
-					System.out.println("Enter start seance min: ");
-					int min = cinema.scanInt.get();
-					Movie movieSelect = cinema.moviesLibrary.get(idMovie - 1);					
+				if(!(idMovie < 1 || idMovie > cinema.moviesLibrary.size())){					
+					Movie movieSelect = cinema.moviesLibrary.get(idMovie - 1);
+					Seance first = new Seance();
+					Seance last = new Seance();
+					Seance seanceLast = new Seance();
+					int hour = 0;
+					do {
+						System.out.println("Enter correct start seance hour: ");
+						hour = cinema.scanInt.get();						
+						seance = new Seance(movieSelect, new Time(hour, 59));				
+						first = Lambda.simplyOne.getFirst(seance, cinema);
+						
+						seanceLast = new Seance(movieSelect, new Time(hour, 0));
+						last = Lambda.levelingLastEquals.getFirst(seanceLast, cinema);				
+						
+					} while(!seance.equals(first) || !seanceLast.equals(last));
+					
+					int min = 0;	
+					do {
+						System.out.println("Enter correct start seance min: " );
+						min = cinema.scanInt.get();
+						
+						seance = new Seance(movieSelect, new Time(hour, min));				
+						first = Lambda.simplyOne.getFirst(seance, cinema);
+						
+						seanceLast = new Seance(movieSelect, new Time(hour, min));
+						last = Lambda.levelingLastEquals.getFirst(seanceLast, cinema);
+					} while(!seance.equals(first) || !seanceLast.equals(last));					
+					
 					seance = new Seance(movieSelect, new Time(hour, min));
 					seanses.add(seance);					
 										
@@ -113,14 +136,11 @@ public class Schedule implements Serializable{
 			last = Lambda.levelingLast.getFirst(last, cinema);
 			
 			replace.remove(0);
-			replace.add(0, last);
-			
-			//replace.forEach(System.out :: println);			
+			replace.add(0, last);					
 		}
 		
 		if(typeOptimizate.equals(Lambda.breakOptimizate)) {
-			breakTime = calcBreakTimeOptimizete(cinema, movie, seance);
-			//breakTime = new Time(0, 20);///////////////////////////
+			breakTime = calcBreakTimeOptimizete(cinema, movie, seance);			
 		}
 		
 		ListIterator<Seance> iterator = replace.listIterator();
@@ -163,8 +183,7 @@ public class Schedule implements Serializable{
 		allOpenCl = Lambda.calcOperationTime(new Time(0, 1), cinema.getClose(), 1);
 		allOpenOp = Lambda.calcOperationTime(allOpenOp, allOpenCl, 1);
 		
-		Time allBreaks = Lambda.calcOperationTime(allOpenOp, allDuration, -1);
-		System.out.println(allBreaks);
+		Time allBreaks = Lambda.calcOperationTime(allOpenOp, allDuration, -1);		
 		long countSeance = seanses.stream().count();
 		
 		int minBreakTime = (int) ((60 * allBreaks.getHour() + allBreaks.getMin())/(countSeance - 1));
