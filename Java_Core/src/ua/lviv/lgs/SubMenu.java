@@ -1,4 +1,4 @@
-package ua.lviv.lgs;
+package ua.lviv.lgs; 
 
 public class SubMenu {
 	
