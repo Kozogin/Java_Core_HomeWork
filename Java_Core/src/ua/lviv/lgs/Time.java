@@ -90,38 +90,6 @@ public class Time implements Comparable<Time>, Comparator<Time>, Serializable{
 				return -1;
 			}
 		}
-//		if(o.getHour() < 7) {
-//			if(this.getHour() < o.getHour()) {
-//				return 1;
-//			} else if (this.getHour() > o.getHour()) {
-//				return -1;
-//			} else {
-//				if(this.getMin() < o.getMin()) {
-//					return 1;
-//				} else if (this.getMin() > o.getMin()) {
-//					return -1;
-//				} else {
-//					return 0;
-//				}
-//			}			
-//		}
-//		
-//		if(o.getHour() > 5 && o.getHour() < 24) {
-//			if(this.getHour() < o.getHour()) {
-//				return 1;
-//			} else if (this.getHour() > o.getHour()) {
-//				return -1;
-//			} else {
-//				if(this.getMin() < o.getMin()) {
-//					return 1;
-//				} else if (this.getMin() > o.getMin()) {
-//					return -1;
-//				} else {
-//					return 0;
-//				}
-//			}	
-//		}
-
 		return 0;
 	}
 
